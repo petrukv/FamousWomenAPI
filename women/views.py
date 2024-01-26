@@ -9,6 +9,10 @@ from .serializers import WomenSerializer
 
 # Create your views here.
 
+class WomenApiList(generics.ListCreateAPIView):
+    queryset = Women.objects.all()
+    serializer_class = WomenSerializer
+
 class WomenApiView(APIView):
     def get(self, request):
         w = Women.objects.all()
@@ -32,8 +36,8 @@ class WomenApiView(APIView):
         
         serializer = WomenSerializer(data=request.data, instance=instance)
         serializer.is_valid(raise_exception=True)
-        serializer.save
-        return Response({'post':serializer.da})
+        serializer.save()
+        return Response({'post':serializer.data})
     
     def delete(self, request, *args, **kwargs):
         pk = kwargs.get('pk', None)
