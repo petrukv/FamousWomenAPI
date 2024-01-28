@@ -3,6 +3,7 @@ from django.shortcuts import render
 from rest_framework import generics, viewsets
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import action
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import (IsAdminUser, IsAuthenticated,
                                         IsAuthenticatedOrReadOnly)
 from rest_framework.response import Response
@@ -19,6 +20,11 @@ class WomenAPIList(generics.ListCreateAPIView):
     serializer_class = WomenSerializer
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
+
+class WomenAPIListPagination(PageNumberPagination):
+    page_size = 3
+    page_size_query_description = 'page_size'
+    max_page_size = 1000
 
 class WomenAPIUpdate(generics.RetrieveUpdateAPIView):
     queryset = Women.objects.all()
